@@ -52,7 +52,7 @@ export default function Sidebar() {
 
         <div className="flex flex-col mt-6 gap-1">
           <a
-            href="#"
+            href="/dashboard"
             className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
             onClick={toogleOtherComponents}
           >
