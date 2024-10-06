@@ -16,7 +16,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 
 import { useState } from "react";
 
-export default function Sidebar() {
+export default function Sidebar({ onSelectKey }) {
   const [isOpenSites, setIsOpenSites] = useState(false);
   const [isProtectionOpenDropdown, setIsProtectionDropdown] = useState(false);
   const [sitesDropValue, setSitesDropValue] = useState(0);
@@ -54,7 +54,7 @@ export default function Sidebar() {
           <a
             href="#"
             className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
-            onClick={toogleOtherComponents}
+            onClick={() => {toogleOtherComponents(); onSelectKey("dashboard");}} 
           >
             <TfiBarChartAlt />
             <span>Dashboard</span>
@@ -76,7 +76,7 @@ export default function Sidebar() {
             className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
             onClick={toggleDropdownSites}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" onClick={() => {onSelectKey("site");}} >
               <IoShieldCheckmarkOutline />
               <span>Sites</span>
             </div>
@@ -86,7 +86,7 @@ export default function Sidebar() {
           <div
             className={`overflow-hidden ease-in-out duration-500 ${
               isOpenSites ? "max-h-40" : "max-h-0"
-            }`}
+            }`} onClick={() => {onSelectKey("site");}}
           >
             <div className={`flex flex-col gap-2 p-4`}>
               <a
