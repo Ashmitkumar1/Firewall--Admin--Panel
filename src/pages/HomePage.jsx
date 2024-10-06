@@ -1,8 +1,11 @@
+import { useLocation } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
 import Sidebar from "../components/Sidebar";
-import { Outlet } from "react-router-dom";
+import Datatable from "../components/dataTable";
 
 export default function HomePage() {
+  const location = useLocation();
+
   return (
     <div className="flex h-screen">
       <section className="bg-light-gray-neon-p w-[15vw] h-full">
@@ -10,7 +13,8 @@ export default function HomePage() {
       </section>
 
       <section className="flex-grow bg-white">
-        <Dashboard />
+        {location.pathname.includes("/dashboard") && <Dashboard />}
+        {location.pathname.includes("/sites") && <Datatable />}
       </section>
     </div>
   );

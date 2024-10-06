@@ -59,7 +59,7 @@ export default function Sidebar() {
           <a
             href="/dashboard"
             className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
-            onClick={toogleOtherComponents}
+            onClick={() => {toogleOtherComponents();}} 
           >
             <TfiBarChartAlt />
             <span>Dashboard</span>
@@ -80,7 +80,7 @@ export default function Sidebar() {
             className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
             onClick={toggleDropdownSites}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" >
               <IoShieldCheckmarkOutline />
               <span>Sites</span>
             </div>
@@ -89,12 +89,12 @@ export default function Sidebar() {
 
           <div
             className={`overflow-hidden ease-in-out duration-500 ${
-              isSystemModalOpenSites ? "max-h-40" : "max-h-0"
+              isSystemModalOpenSites ? "max-h-40" : "max-h-0" 
             }`}
           >
             <div className={`flex flex-col gap-2 p-4`}>
               <a
-                href="#"
+                href="/sites"
                 className="flex items-center gap-4 ease-in duration-100"
                 role="sites-item"
                 onClick={() => setSitesDropValue(1)}
