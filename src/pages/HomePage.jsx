@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Datatable from "../components/dataTable";
+import Dashboard from "../components/Dashboard";
 
 export default function HomePage() {
   const [activeKey, setActiveKey] = useState(null);
@@ -9,6 +10,8 @@ export default function HomePage() {
     switch (activeKey) {
       case "site":
         return <Datatable />;
+      case "dashboard":
+        return <Dashboard />
       default:
         return null; // Or some default content
     }
