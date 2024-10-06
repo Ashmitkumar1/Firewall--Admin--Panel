@@ -1,30 +1,21 @@
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import Dashboard from "../components/Dashboard";
 import Sidebar from "../components/Sidebar";
 import Datatable from "../components/dataTable";
-import Dashboard from "../components/Dashboard";
 
 export default function HomePage() {
-  const [activeKey, setActiveKey] = useState(null);
-
-  const renderContent = () => {
-    switch (activeKey) {
-      case "site":
-        return <Datatable />;
-      case "dashboard":
-        return <Dashboard />
-      default:
-        return null; // Or some default content
-    }
-  };
+  const location = useLocation();
 
   return (
-    <section className="bg-light-gray-neon-p w-screen h-screen flex">
-      <div className="w-[13.33%]">
-        <Sidebar onSelectKey={setActiveKey} />
-      </div>
-      <div className="w-[86.67%]">
-        {renderContent()}
-      </div>
-    </section>
+    <div className="flex h-screen">
+      <section className="bg-light-gray-neon-p w-[15vw] h-full">
+        <Sidebar />
+      </section>
+
+      <section className="flex-grow bg-white">
+        {location.pathname.includes("/dashboard") && <Dashboard />}
+        {location.pathname.includes("/sites") && <Datatable />}
+      </section>
+    </div>
   );
 }

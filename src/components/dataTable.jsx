@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaCheckCircle, FaLock, FaSyncAlt, FaEllipsisV, FaShieldAlt, FaPlusCircle } from 'react-icons/fa';
 
-const TableView = () => {
+const Datatable = () => {
   const data = [
     {
       site: 'SafeLine Waf Community Edition',
@@ -162,4 +162,4 @@ const AdvancedButtons = ({ advanced }) => {
   );
 };
 
-export default TableView;
+export default Datatable;
