@@ -13,15 +13,16 @@ import {
 import { LiaToolsSolid } from "react-icons/lia";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
-
-
 import { useState } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
 
 export default function Sidebar() {
   const [isSystemModalOpenSites, setisSystemModalOpenSites] = useState(false);
   const [isProtectionOpenDropdown, setIsProtectionDropdown] = useState(false);
   const [sitesDropValue, setSitesDropValue] = useState(0);
   const [isSystemModalOpen, setSystemModalOpen] = useState(false); // State for modal
+
+  const location = useLocation(); // Get the current location
 
   const toggleDropdownSites = () => {
     setisSystemModalOpenSites(!isSystemModalOpenSites);
@@ -43,6 +44,9 @@ export default function Sidebar() {
     setSystemModalOpen(!isSystemModalOpen); // Toggle the modal state
   };
 
+  // Function to determine if a route is active
+  const isActive = (path) => (location.pathname === path ? "bg-sea-green-p text-white" : "");
+
   return (
     <>
       <div className="w-52 h-full p-4 relative overflow-hidden">
@@ -58,8 +62,8 @@ export default function Sidebar() {
         <div className="flex flex-col mt-6 gap-1">
           <a
             href="/dashboard"
-            className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
-            onClick={() => {toogleOtherComponents();}} 
+            className={`flex items-center gap-3 w-full ${isActive('/dashboard')} rounded-md p-4 ease-in duration-100`}
+            onClick={toogleOtherComponents}
           >
             <TfiBarChartAlt />
             <span>Dashboard</span>
@@ -67,7 +71,7 @@ export default function Sidebar() {
 
           <a
             href="#"
-            className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
+            className={`flex items-center gap-3 w-full ${isActive('/events')} rounded-md p-4 ease-in duration-100`}
             onClick={toogleOtherComponents}
           >
             <GrNotes />
@@ -77,10 +81,10 @@ export default function Sidebar() {
           {/* Sites Dropdown */}
           <button
             type="button"
-            className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
+            className={`flex items-center gap-3 w-full ${isActive('/sites')} rounded-md p-4 ease-in duration-100`}
             onClick={toggleDropdownSites}
           >
-            <div className="flex items-center gap-3" >
+            <div className="flex items-center gap-3">
               <IoShieldCheckmarkOutline />
               <span>Sites</span>
             </div>
@@ -155,7 +159,7 @@ export default function Sidebar() {
           {/* Protection Dropdown */}
           <button
             type="button"
-            className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
+            className={`flex items-center gap-3 w-full ${isActive('/protections')} rounded-md p-4 ease-in duration-100`}
             onClick={toggleDropdownProtection}
           >
             <div className="flex items-center gap-3">
@@ -173,7 +177,7 @@ export default function Sidebar() {
 
           <a
             href="#"
-            className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md p-4 ease-in duration-100"
+            className={`flex items-center gap-3 w-full ${isActive('/system')} rounded-md p-4 ease-in duration-100`}
             onClick={toggleSystemModal} // Trigger modal
           >
             <IoSettingsOutline />
@@ -187,7 +191,7 @@ export default function Sidebar() {
           <div className="flex flex-col mt-1 gap-1">
             <a
               href="#"
-              className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md px-4 py-2 ease-in duration-100"
+              className={`flex items-center gap-3 w-full ${isActive('/homepage')} rounded-md px-4 py-2 ease-in duration-100`}
               onClick={toogleOtherComponents}
             >
               <GiBrokenShield />
@@ -196,7 +200,7 @@ export default function Sidebar() {
 
             <a
               href="#"
-              className="flex items-center gap-3 w-full focus:bg-sea-green-p focus:text-white hover:bg-sea-green-p hover:text-white rounded-md px-4 py-2 ease-in duration-100"
+              className={`flex items-center gap-3 w-full ${isActive('/documentation')} rounded-md px-4 py-2 ease-in duration-100`}
               onClick={toogleOtherComponents}
             >
               <CgNotes />
@@ -208,92 +212,43 @@ export default function Sidebar() {
 
       {/* PopUp Window */}
       {isSystemModalOpen && (
-
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
-    <div className="bg-white rounded-md p-6 w-3/4 shadow-lg max-w-4xl relative">
-      <div className="relative">
-        <div className="flex justify-between items-start border-b-2 pb-4">
-          <div>
-            <span className="bg-yellow-400 text-white rounded-md p-1 px-3 inline-block mb-2 mr-1">
-              XSS
-            </span>
-            <span className="text-md">
-              https://demo.waf.chaitin.com/tomcat-docs/appdev/sample/web/hello.jsp?test=&lt;script&gt;alert(12345)&lt;/script&gt;
-            </span>
-            <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-lg">
-              <div className="flex flex-col gap-4">
-                {/* Attack IP */}
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-semibold">Attack IP</span>
-                  <div>
-                    <span className="text-black font-medium">123.254.107.235</span>
-                    <button className="text-sea-green-p ml-4 hover:underline">
-                      Add to IP Group
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-semibold">Payload</span>
-                  <div className="flex items-center">
-                    <span className="text-gray-700 font-bold mr-2">URLPATH</span>
-                    <span className="m-2"><IoArrowForwardCircleOutline /></span>
-                    <span className="border border-gray-300 bg-gray-100 p-1 rounded text-sm text-black">
-                      {'<script>alert(12345)</script>'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-semibold">Module</span>
-                  <span className="text-black font-medium">XSS</span>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-semibold">Time</span>
-                  <span className="text-black font-medium">2024-07-22 17:17:13</span>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-semibold">ID</span>
-                  <span className="text-black font-medium">
-                    d9d2fed482c24aa8a7cd62d655ec7c0c
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
+          <div className="bg-white rounded-md p-6 w-3/4 shadow-lg max-w-4xl relative">
+            <div className="relative">
+              <div className="flex justify-between items-start border-b-2 pb-4">
+                <div>
+                  <span className="bg-yellow-400 text-white rounded-md p-1 px-3 inline-block mb-2 mr-1">
+                    XSS
                   </span>
+                  <span className="text-md">
+                    https://demo.waf.chaitin.com/tomcat-docs/appdev/sample/web/hello.jsp?test=&lt;script&gt;alert(12345)&lt;/script&gt;
+                  </span>
+                  <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-lg">
+                    <div className="flex flex-col gap-4">
+                      {/* Attack IP */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-500 font-semibold">Attack IP</span>
+                        <div>
+                          <span className="text-black font-medium">123.254.107.235</span>
+                          <button className="text-sea-green-p text-xs ml-2">Whitelist</button>
+                        </div>
+                      </div>
+                      {/* Result */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-500 font-semibold">Result</span>
+                        <span className="text-black font-medium">Blocked</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
+                <button className="absolute top-0 right-0 text-gray-500" onClick={toggleSystemModal}>
+                  <span className="text-2xl">&times;</span>
+                </button>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="flex justify-between items-center mt-4">
-          <div className="flex space-x-4">
-            <button className="bg-sea-green-p text-white px-4 py-2 rounded-md">REQUEST</button>
-            <button className="bg-gray-200 text-black px-4 py-2 rounded-md">RESPONSE</button>
-          </div>
-          <div className="flex justify-between items-center">
-                  <select className="bg-white border border-gray-300 p-2 rounded-md ">
-                    <option value="UTF-8">UTF-8</option>
-                    <option value="ISO-8859-1">ISO-8859-1</option>
-                    <option value="UTF-16">UTF-16</option>
-                  </select>
-                </div>
-        </div>
-
-        <div className="mt-4 flex justify-between items-center">
-          <div>
-            <span className="text-sea-green-p cursor-pointer mr-2">Feedback false alarm</span>
-            <span className="text-sea-green-p cursor-pointer">Copy as cURL</span>
-          </div>
-          <button className="bg-sea-green-p text-white px-4 py-2 rounded-md" onClick={toggleSystemModal}>
-            CLOSE
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  )}
-
+      )}
     </>
   );
 }
